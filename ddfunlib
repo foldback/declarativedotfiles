@@ -1,0 +1,232 @@
+# ddfunlib
+# © Jorrit Visser // github.com/jorvi
+
+
+
+####################
+### Installation ###
+####################
+
+# Install Homebrew if not yet installed
+installBrew() {
+  if ! hash "brew" 2>/dev/null; then
+    printf "Installing Homebrew.. "
+    # Ask for the administrator password upfront if needed
+    if [ ! "${UID}" = 0 ]; then
+      sudo -v
+    fi;
+    # Installation
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 1>/dev/null
+    # App package repos
+    brew tap caskroom/cask
+    brew tap caskroom/versions
+    printf "done!\n"
+  fi;
+}
+
+# Install app via `brew`
+brewApp() {
+  installBrew
+  # Check if app isn't already installed
+  if [ ! -d "/Applications/${Name}.app" ]; then
+    printf "Installing ${Name}.. "
+    brew cask install "${Packagename}" 1>/dev/null
+    printf "done!\n"
+  fi;
+}
+
+# Install binary via `brew`
+brewBinary() {
+  installBrew
+  # Check if binary isn't already installed
+  if [ ! "$(which ${Packagename})" = "/usr/local/bin/${Packagename}" ]; then
+    printf "Installing ${Name}.. "
+    brew install "${Packagename}" 1>/dev/null
+    printf "done!\n"
+  fi;
+}
+
+# Install font via `brew`
+brewFonts() {
+  installBrew
+    printf "Installing fonts: ${@}.. "
+    brew tap "caskroom/fonts" && \
+    brew cask install "${@}" 1>/dev/null
+    printf "done!\n"
+}
+
+# Install app via `mas`, the Mac App Store CLI interface
+masApp() {
+  # Check if app isn't already installed
+  if [ ! -d "/Applications/${Name}.app" ]; then
+    if ! hash "mas" 2>/dev/null; then
+      installBrew
+      brew install "mas" 1>/dev/null
+      printf "Installing ${Name}.. "
+      mas install "${Packagename}" 1>/dev/null
+      printf "done!\n"
+      brew remove "mas" 1>/dev/null
+    else
+      printf "Installing ${Name}.. "
+      mas install "${Packagename}" 1>/dev/null
+      printf "done!\n"
+    fi;
+  fi;
+}
+
+installPackages() {
+  printf "Installing ${Name} packages.. "
+
+  for Package in ${Packagelist}; do
+  "${Packagescmd}" "${Package}" 1>/dev/null
+  done;
+
+  printf "done!\n"
+}
+
+
+
+#####################
+### Configuration ###
+#####################
+
+# Easily display messages
+message() {
+  printf "${messageText}\n"
+}
+
+# Zombie `sudo` that stays alive until you manually kill it
+spawnSudo() {
+  # Ask for the administrator password upfront if needed
+  if [ ! "${UID}" = 0 ]; then
+    sudo -v
+  fi;
+  # Keep-alive: background existing `sudo` until `killSudo` is called
+  ( while true; do
+    sudo -n true
+    sleep 298
+  done; ) &
+  # Save subshell pid to be able to kill backgrounding `sudo` later
+  ESCALATION_PID="${!}"
+  trap killSudo SIGINT SIGTERM
+}
+
+# Kill zombie `sudo`
+killSudo() {
+    kill -0 "${ESCALATION_PID}" 1>/dev/null
+    unset "${ESCALATION_PID}"
+    trap - SIGINT SIGTERM
+    sudo -k
+}
+
+# Name your Mac
+nameMac() {
+  printf "Setting Mac name to ${nameComputer}.. "
+  sudo scutil --set ComputerName "${nameComputer}"
+  sudo scutil --set HostName "${nameComputer}"
+  sudo scutil --set LocalHostName "${nameComputer}"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${nameComputer}"
+  printf "done!\n"
+}
+
+# Add app icon to Dock
+dockApp() {
+printf "Adding ${Name} icon to Dock.. "
+
+  # Get full app path
+  if "$(find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit)"; then
+    local Appdirectory="$(find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit)"
+  # Even find core system apps
+  elif "$(find -L "/System/Library/CoreServices" -maxdepth 2 -type d -name "${Name}.app" -print -quit)"; then
+    local Appdirectory="$(find -L "/System/Library/CoreServices" -maxdepth 2 -name "${Name}.app" -print -quit)"
+  else
+    printf "Application '${Name}' could not be located!\n"
+  fi;
+  # write to `Dock` settings file
+  defaults write com.apple.dock persistent-apps -array-add \
+  "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${Appdirectory}.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>" \
+  && killall Dock
+
+  printf "done!\n"
+}
+
+changeIcon() {
+  if hash "npm" 2>/dev/null; then
+    printf "Changing ${Name} icon.. "
+    npm install -g fileicon 1>/dev/null && \
+      fileicon rm "/Applications/${Name}" 1>/dev/null && \
+      fileicon set "/Applications/${Name}" \
+      "${HOME}/dotfiles/assets/${Name}.icns" 1>/dev/null
+    npm uninstall -g fileicon 1>/dev/null
+    printf "done!\n"
+  fi;
+}
+
+
+
+##################
+### Symlinking ###
+##################
+
+# Links source to target dir
+symlink() {
+  printf "Symlinking ${1} to ${2}.. "
+
+  ln -sF "${1}" "${2}"
+
+  printf "done!\n"
+}
+
+# Merge two directories and then symlink them
+cplinkDir() {
+printf "Copying directory ${2} to ${1} and symlinking back.. "
+
+  # Copy source directory to target directory
+  cp -Rn "${2}/" "${1}" && \
+  # Delete source directory
+  rm -Rf "${2}" && \
+  # Symlink the merged directory back to the source directory
+  ln -sF "${1}/" "${2}"
+
+printf "done!\n"
+}
+
+# Back up a directory and then replace it by a symlink
+baklink() {
+  printf "Backing up ${2} and then symlinking from ${1}.."
+
+  mv -f "${2}" "${2}_backup" && \
+  ln -sF "${1}" "${2}"
+
+  printf "done!\n"
+}
+
+
+
+#############
+### Cloud ###
+#############
+
+# Make sure your cloud directory (e.g `Dropbox`, `Amazon Drive`) is fully initialized
+checkCloud() {
+  # Check if cloud directory is non-existant or empty
+  if [ ! -d "${HOME}/${Cloud}" ] || \
+  [ "$(du -d0 -k ${HOME}/${Cloud} | grep -o '[0-9]*')" -lt "533" ]; then
+    printf "Please log in to ${Cloud}!\n"
+    return 1
+  fi;
+
+  # Check if cloud directory is still syncing
+  Size_A="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+  sleep 5
+  Size_B="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+  if [ ! "${Size_A}" = "${Size_B}" ]; then
+    printf "Your ${Cloud} is still syncing, please wait.. "
+      while [ ! "${Size_A}" = "${Size_B}" ]; do
+        Size_A="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+        sleep 5
+        Size_B="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+      done;
+    printf "done!\n"
+  fi;
+}
