@@ -1,6 +1,6 @@
 # macOS
 # atom.sh
-# © Jorrit Visser // github.com/jorvi
+# © Jorrit Visser <git.io/jorvi>
 
 
 # Specific quirks that can't be functionized go here

@@ -1,6 +1,6 @@
 # macOS
 # ruby.sh
-# © Jorrit Visser // github.com/jorvi
+# © Jorrit Visser <git.io/jorvi>
 
 
 main() {

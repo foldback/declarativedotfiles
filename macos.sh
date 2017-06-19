@@ -229,7 +229,7 @@ defaults -currentHost write NSGlobalDomain com.apple.trackpad.scaling -float 1.5
 defaults -currentHost write NSGlobalDomain com.apple.mouse.scaling -float 2.0
 
 # Increase sound quality for Bluetooth headphones/headsets
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+#defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
 # Enable tab-select for list and text boxes only
 # Much more efficient, see: http://superuser.com/a/547501
@@ -256,7 +256,7 @@ defaults write NSGlobalDomain AppleLocale -string "en_NL@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
-# Show language menu in the top right corner of the boot screen
+# Show language menu in the top right corner of the login screen
 sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
 # Disable automatic capitalization as it’s annoying when typing code
@@ -283,7 +283,7 @@ sudo defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor.plis
 #defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
 
 # Stop iTunes from responding to the keyboard media keys
-#launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist >/dev/null 2>&1
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist >/dev/null 2>&1
 
 ###############################################################################
 # Screen
@@ -303,7 +303,7 @@ defaults write com.apple.screencapture disable-shadow -bool true
 defaults write NSGlobalDomain AppleFontSmoothing -int 1
 
 # Enable HiDPI display modes (requires restart)
-sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+#sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
 ###############################################################################
 # Finder
@@ -371,27 +371,32 @@ defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 
 # Show item info near icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo bool true" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo bool true" "${HOME}/Library/Preferences/com.apple.finder.plist"
 /usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:showItemInfo bool true" "${HOME}/Library/Preferences/com.apple.finder.plist"
 
 # Show item info on the bottom of the icons on the desktop
-/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom true" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom bool true" "${HOME}/Library/Preferences/com.apple.finder.plist"
 
 # Enable snap-to-grid for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:arrangeBy string grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy string grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy string grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy string grid" "${HOME}/Library/Preferences/com.apple.finder.plist"
 
 # Increase grid spacing for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:gridSpacing integer 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing integer 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing integer 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing integer 95" "${HOME}/Library/Preferences/com.apple.finder.plist"
 
 # Increase the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
-/usr/libexec/PlistBuddy -c "Add :FK_StandardViewSettings:IconViewSettings:iconSize integer 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize integer 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize integer 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize integer 80" "${HOME}/Library/Preferences/com.apple.finder.plist"
+
+# Disable icon previews
+#/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showIconPreview bool false" "${HOME}/Library/Preferences/com.apple.finder.plist"
+#/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showIconPreview bool false" "${HOME}/Library/Preferences/com.apple.finder.plist"
+#/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showIconPreview bool false" "${HOME}/Library/Preferences/com.apple.finder.plist"
 
 # Use column view in all Finder windows by default
 # Four-letter codes for the other view modes: 'icnv', 'Nlsv', 'Flwv'
@@ -410,7 +415,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Enable the MacBook Air SuperDrive on any Mac
-# Stopped working since 10.11 (El Capitan) due to `System Integrity Protection`
+# Stopped working since 10.11 (El Capitan) due to System Integrity Protection
 #sudo nvram boot-args="mbasd=1"
 
 # Show the ~/Library folder
