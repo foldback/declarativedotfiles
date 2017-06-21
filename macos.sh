@@ -181,26 +181,23 @@ networksetup -setdnsservers Wi-Fi "8.8.8.8" "8.8.4.4" "208.67.222.222" "208.67.2
 # Input and Bluetooth
 ###############################################################################
 
-# Enable tap to click for this user and on the login screen
+# Enable tap to click
 # Trackpads
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
-defaults write -currentHost com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults write -currentHost com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 # Magic Mouse
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -bool true
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -bool true
 
 # Trackpad: Map bottom right corner to right-click
-#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
 #defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
 #defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+#defaults -currentHost write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+#defaults -currentHost write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
 
 # Force Touch-trackpads
 # Make clicks silent
-defaults write com.apple.AppleMultitouchTrackpad ActuationStrength -bool false
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad -bool false
+defaults write -currenthost com.apple.AppleMultitouchTrackpad ActuationStrength -bool false
+defaults write -currenthost com.apple.driver.AppleBluetoothMultitouch.trackpad -bool false
 # Medium pressure to register first click
 defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 1
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad -int 0
@@ -209,24 +206,21 @@ defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad -int 0
 
 # Three finger window drag and text selection (old screen dragging with four fingers)
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -bool false
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -bool false
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -bool false
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -bool false
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -bool false
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -bool false
+defaults write -currenthost com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write -currenthost com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -bool false
+defaults write -currenthost com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -bool false
+defaults write -currenthost com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -bool false
+defaults write -currenthost com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+defaults write -currenthost com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -bool false
+defaults write -currenthost com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -bool false
+defaults write -currenthost com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -bool false
 
 # Enable “natural” (smartphone-style) scrolling
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
 # Set trackpad & mouse sensitivity to a reasonable number
-# User and machine-wide
 defaults write NSGlobalDomain com.apple.trackpad.scaling -float 1.5
 defaults write NSGlobalDomain com.apple.mouse.scaling -float 2.0
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.scaling -float 1.5
-defaults -currentHost write NSGlobalDomain com.apple.mouse.scaling -float 2.0
 
 # Increase sound quality for Bluetooth headphones/headsets
 #defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
