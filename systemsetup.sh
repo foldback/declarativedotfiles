@@ -28,7 +28,7 @@ setupDev() {
 }
 
 setupConsumer() {
-  for Script in ${HOME}/dotfiles/{1password,amphetamine,airparrot,calibre,etcher,pixelmator,ransomwhere,spotify,telegram,textual,transmission,vlc,viscosity,whatsapp}.sh; do
+  for Script in ${HOME}/dotfiles/{1password,amphetamine,airparrot,calibre,etcher,msoffice,pixelmator,ransomwhere,spotify,telegram,textual,transmission,vlc,viscosity,whatsapp}.sh; do
     ${Script}
   done;
 }
