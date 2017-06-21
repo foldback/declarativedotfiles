@@ -134,17 +134,17 @@ dockApp() {
 printf "Adding ${Name} icon to Dock.. "
 
   # Get full app path
-  if "$(find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit)"; then
-    local Appdirectory="$(find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit)"
+  if find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit >/dev/null 2>&1; then
+    local Appdir="$(find -L "/Applications" -maxdepth 3 -type d -name "${Name}.app" -print -quit)"
   # Even find core system apps
-  elif "$(find -L "/System/Library/CoreServices" -maxdepth 2 -type d -name "${Name}.app" -print -quit)"; then
-    local Appdirectory="$(find -L "/System/Library/CoreServices" -maxdepth 2 -name "${Name}.app" -print -quit)"
+  elif find -L "/System/Library/CoreServices" -maxdepth 2 -type d -name "${Name}.app" -print -quit >/dev/null 2>&1; then
+    local Appdir="$(find -L "/System/Library/CoreServices" -maxdepth 2 -type d -name "${Name}.app" -print -quit)"
   else
     printf "Application '${Name}' could not be located!\n"
   fi;
   # write to `Dock` settings file
   defaults write com.apple.dock persistent-apps -array-add \
-  "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${Appdirectory}.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>" \
+  "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>${Appdir}</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>" \
   && killall Dock
 
   printf "done!\n"
