@@ -74,6 +74,7 @@ masApp() {
   fi;
 }
 
+# Generic package installer
 installPackages() {
   printf "Installing ${Name} packages.. "
 
@@ -133,11 +134,14 @@ killSudo() {
 
 # Name your Mac
 nameMac() {
-  printf "Setting Mac name to ${nameComputer}.. "
-  sudo scutil --set ComputerName "${nameComputer}"
-  sudo scutil --set HostName "${nameComputer}"
-  sudo scutil --set LocalHostName "${nameComputer}"
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${nameComputer}"
+  printf "Setting Mac name to ${Computername}.. "
+
+  sudo scutil --set ComputerName "${Computername}"
+  sudo scutil --set HostName "${Computername}"
+  sudo scutil --set LocalHostName "${Computername}"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server \
+  NetBIOSName -string "${Computername}"
+
   printf "done!\n"
 }
 
@@ -188,7 +192,7 @@ changeIcon() {
 ### Symlinking ###
 ##################
 
-# Links source to target dir
+# Links source to target
 symlink() {
   printf "Symlinking ${1} to ${2}.. "
 
@@ -238,9 +242,9 @@ checkCloud() {
   fi;
 
   # Check if cloud directory is still syncing
-  Size_A="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+  local Size_A="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
   sleep 5
-  Size_B="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
+  local Size_B="$(du -d0 -k "${HOME}/${Cloud}" | grep -o '[0-9]*')"
   if [ ! "${Size_A}" = "${Size_B}" ]; then
     printf "Your ${Cloud} is still syncing, please wait.. "
       while [ ! "${Size_A}" = "${Size_B}" ]; do
