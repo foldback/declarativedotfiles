@@ -30,7 +30,7 @@ main() {
   # Abracadabra
   brewBinary
   configureZsh
-  baklink "${=Zshpath}"
+  baklink "${Zshpath[@]}"
 }
 
 main

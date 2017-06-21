@@ -15,8 +15,8 @@ main() {
 
   # Abracadabra
   brewBinary
-  baklink "${=Vimrcpath}"
-  baklink "${=Vimpath}"
+  baklink "${Vimrcpath[@]}"
+  baklink "${Vimpath[@]}"
 }
 
 main

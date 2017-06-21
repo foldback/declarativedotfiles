@@ -39,9 +39,9 @@ main() {
   # Abracadabra
   brewApp
   checkCloud
-  cplinkDir "${=Documenstpath}"
-  cplinkDir "${=Picturespath}"
-  baklink "${=Privatepath}"
+  cplinkDir "${Documenstpath[@]}"
+  cplinkDir "${Picturespath[@]}"
+  baklink "${Privatepath[@]}"
   configureCloud
 }
 

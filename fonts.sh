@@ -4,8 +4,8 @@
 
 
 main() {
-  Fonts=("font-source-code-pro"
-  brewFonts "${=Fonts}"
+  Fonts=("font-source-code-pro")
+  brewFonts "${Fonts[@]}"
 }
 
 main

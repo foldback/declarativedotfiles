@@ -40,7 +40,7 @@ main() {
 
   # Abracadabra
   masApp
-  mvlink "${=Themepath}"
+  baklink "${Themepath[@]}"
   configureXcode
   dockApp
   message "${Messagetext}"

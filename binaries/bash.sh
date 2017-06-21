@@ -18,10 +18,10 @@ main() {
 
   # Abracadabra
   brewBinary
-  baklink "${Bashprofilepath}"
-  baklink "${Bashpromptpath}"
-  baklink "${Bashrcpath}"
-  installPackages "${=Packageslist}"
+  baklink "${Bashprofilepath[@]}"
+  baklink "${Bashpromptpath[@]}"
+  baklink "${Bashrcpath[@]}"
+  installPackages "${Packageslist[@]}"
 }
 
 main

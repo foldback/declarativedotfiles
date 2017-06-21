@@ -48,8 +48,8 @@ main() {
   brewApp
   changeIcon
   configureVSCode
-  baklink "${=VSCodepath}"
-  installPackages "${=Packageslist}"
+  baklink "${VSCodepath[@]}"
+  installPackages "${Packageslist[@]}"
 }
 
 main

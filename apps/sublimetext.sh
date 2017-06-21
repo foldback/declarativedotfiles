@@ -50,7 +50,7 @@ main() {
   brewApp
   changeIcon
   configureSublime
-  baklink "${=Atompath}"
+  baklink "${Sublimepath[@]}"
 }
 
 main

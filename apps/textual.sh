@@ -22,6 +22,7 @@ main() {
 
   # Abracadabra
   masApp
+  configureTextual
 }
 
 main

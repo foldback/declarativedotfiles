@@ -16,8 +16,8 @@ main() {
 
   # Abracadabra
   brewBinary
-  installPackages "${=Packagelist}"
-  baklink "${Eslintpath}"
+  installPackages "${Packagelist[@]}"
+  baklink "${Eslintpath[@]}"
 }
 
 main

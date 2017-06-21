@@ -16,7 +16,7 @@ main() {
   # Abracadabra
   brewApp
   checkCloud
-  cplinkDir "${=Calibrepath}"
+  cplinkDir "${Calibrepath[@]}"
 }
 
 main

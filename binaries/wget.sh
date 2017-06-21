@@ -14,7 +14,7 @@ main() {
 
   # Abracadabra
   brewBinary
-  baklink "${=Wgetpath}"
+  baklink "${Wgetpath[@]}"
 }
 
 main

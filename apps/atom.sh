@@ -48,8 +48,8 @@ main() {
   # Abracadabra
   brewApp
   configureAtom
-  baklink "${=Atompath}"
-  installPackages "${=Packageslist}"
+  baklink "${Atompath[@]}"
+  installPackages "${Packageslist[@]}"
 }
 
 main
