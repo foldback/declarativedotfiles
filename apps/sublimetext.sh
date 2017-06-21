@@ -18,6 +18,21 @@ configureSublime() {
   # Enable key repeat for Vim-mode
   defaults write com.sublimetext.3 ApplePressAndHoldEnabled -bool false
 
+  # Disable automatic capitalization as it’s annoying when typing code
+  defaults write com.sublimetext.3 NSAutomaticCapitalizationEnabled -bool false
+
+  # Disable smart dashes as they’re annoying when typing code
+  defaults write com.sublimetext.3 NSAutomaticDashSubstitutionEnabled -bool false
+
+  # Disable automatic period substitution as it’s annoying when typing code
+  defaults write com.sublimetext.3 NSAutomaticPeriodSubstitutionEnabled -bool false
+
+  # Disable smart quotes as they’re annoying when typing code
+  defaults write com.sublimetext.3 NSAutomaticQuoteSubstitutionEnabled -bool false
+
+  # Disable auto-correct
+  defaults write com.sublimetext.3 NSAutomaticSpellingCorrectionEnabled -bool false
+
   printf "done!\n"
 }
 

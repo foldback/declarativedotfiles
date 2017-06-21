@@ -3,6 +3,15 @@
 # © Jorrit Visser <git.io/jorvi>
 
 
+configureTextual() {
+  printf "Configuring ${Name}.. "
+
+  # Disable smart quotes as they’re annoying when typing code
+  defaults write com.codeux.irc.textual5 NSAutomaticQuoteSubstitutionEnabled -bool false
+
+  printf "done!\n"
+}
+
 main() {
   # Load the magic library
   source "${HOME}/dotfiles/scripts/ddfunlib"

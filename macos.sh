@@ -242,7 +242,7 @@ defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 # Enable keyboard press-and-hold pop-up
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
+defaults delete NSGlobalDomain ApplePressAndHoldEnabled 2>/dev/null
 
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 1
@@ -259,20 +259,20 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true
 # Show language menu in the top right corner of the login screen
 sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
-# Disable automatic capitalization as it’s annoying when typing code
-#defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+# Enable automatic capitalization (disabling per individual app is more useful)
+defaults delete NSGlobalDomain NSAutomaticCapitalizationEnabled
 
-# Disable smart dashes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+# Enable smart dashes (disabling per individual app is more useful)
+defaults delete NSGlobalDomain NSAutomaticDashSubstitutionEnabled
 
-# Disable automatic period substitution as it’s annoying when typing code
-defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+# Enable automatic period substitution (disabling per individual app is more useful)
+defaults delete NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled
 
-# Disable smart quotes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+# Enable smart quotes (disabling per individual app is more useful)
+defaults delete NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled
 
-# Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# Enable auto-correct  (disabling per individual app is more useful)
+defaults delete NSGlobalDomain NSAutomaticSpellingCorrectionEnabled
 
 # Keep keyboard backlight on indefinitely
 # Value is in seconds

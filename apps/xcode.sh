@@ -10,6 +10,21 @@ configureXcode() {
   # Enable key repeat
   defaults write com.apple.dt.Xcode ApplePressAndHoldEnabled -bool false
 
+  # Disable automatic capitalization as it’s annoying when typing code
+  defaults write com.apple.dt.Xcode NSAutomaticCapitalizationEnabled -bool false
+
+  # Disable smart dashes as they’re annoying when typing code
+  defaults write com.apple.dt.Xcode NSAutomaticDashSubstitutionEnabled -bool false
+
+  # Disable automatic period substitution as it’s annoying when typing code
+  defaults write com.apple.dt.Xcode NSAutomaticPeriodSubstitutionEnabled -bool false
+
+  # Disable smart quotes as they’re annoying when typing code
+  defaults write com.apple.dt.Xcode NSAutomaticQuoteSubstitutionEnabled -bool false
+
+  # Disable auto-correct
+  defaults write com.apple.dt.Xcode NSAutomaticSpellingCorrectionEnabled -bool false
+
   printf "done!\n"
 }
 
