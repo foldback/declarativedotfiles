@@ -84,6 +84,18 @@ installPackages() {
   printf "done!\n"
 }
 
+# Install Node + Package Manager
+installNPM() {
+  if ! hash "npm" 2>/dev/null; then
+    printf "Installing Node + Package Manager.. "
+
+    # Installation
+    brew install "npm" 1>/dev/null
+
+    printf "done!\n"
+  fi;
+}
+
 
 
 #####################
@@ -151,7 +163,15 @@ printf "Adding ${Name} icon to Dock.. "
 }
 
 changeIcon() {
-  if hash "npm" 2>/dev/null; then
+  if hash "fileicon" 2>/dev/null; then
+    printf "Changing ${Name} icon.. "
+      fileicon rm "/Applications/${Name}" 1>/dev/null && \
+      fileicon set "/Applications/${Name}" \
+      "${HOME}/dotfiles/assets/${Name}.icns" 1>/dev/null
+    printf "done!\n"
+  else
+    installBrew
+    installNPM
     printf "Changing ${Name} icon.. "
     npm install -g fileicon 1>/dev/null && \
       fileicon rm "/Applications/${Name}" 1>/dev/null && \
