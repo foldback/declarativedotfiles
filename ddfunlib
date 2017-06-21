@@ -191,13 +191,14 @@ printf "Copying directory ${2} to ${1} and symlinking back.. "
 printf "done!\n"
 }
 
-# Back up a directory and then replace it by a symlink
+# Back up a directory/file and then replace it by a symlink
 baklink() {
-  printf "Backing up ${2} and then symlinking from ${1}.."
+  printf "Backing up ${2}.. "
+  mv "${2}" "${2}_backup" 2>/dev/null && \
+  printf "done!\n" || printf "backup failed!\n"
 
-  mv -f "${2}" "${2}_backup" && \
+  printf "Symlinking from ${1}.. "
   ln -sF "${1}" "${2}"
-
   printf "done!\n"
 }
 
