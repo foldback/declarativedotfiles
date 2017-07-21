@@ -1,3 +1,7 @@
+## !WARNING! Deprecated
+
+These had a lot of work put in, but I've realized halfway that switching to Ansible would improve reliability, and that's the most important thing to me :)
+
 ## Introduction
 
 These are the scripts for my Declarative Dotfiles. I was tired of having to manually update my dotfile scripts if I had found a way to improve on whatever I was using. These scripts aim to change that:
